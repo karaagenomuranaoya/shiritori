@@ -201,7 +201,7 @@ function App() {
     <div className="App">
       <div className="container">
         <div className="colums">
-          <div className="column is-full">
+          <div className="column is-half is-offset-one-quarter">
             <div className="card fixed-card">
               <div className="card-content">
                 <div className="content">
@@ -219,8 +219,8 @@ function App() {
                 <button className="button is-primary is-large is-responsive is-fullwidth" onClick={handleSubmit}>回答</button>
                 <h1>　　　</h1>
                 <div className="content">
-                  <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、${responseWord}` : "好きな言葉で始めたまえ"}！</h2>
-
+                  <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、` : "好きな言葉で始めたまえ"}！</h2>
+                  <h2>{responseWord}！</h2>
                   <h3>【ちょこっと解説】<br></br>{meaning}</h3>
                 </div>
                 <ul>
@@ -238,7 +238,7 @@ function App() {
         </div>
       </div>
 
-      <button className="button is-danger is-fixed-top" onClick={reset}>リセット</button>
+      <button className="button is-danger is-fixed-top" onClick={reset}>リセット</button><h1>小さい文字で終わる言葉には、その言葉で返してね。例：歯医者（はいしゃ）→やりいか</h1>
     </div>
   );
 }
