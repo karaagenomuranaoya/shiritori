@@ -51,9 +51,9 @@ function App() {
       alert("3文字以上で頼むぞ。")
       return;
     }
-    const lastChar = userWord.slice(-1);
+    const userLastChar = ruleChar(userWord);
 
-    if (lastChar === "ん") {
+    if (userLastChar === "ん") {
       alert("「ん」で終わってるじゃん。負けちゃうよ。")
       return;
     }
@@ -67,11 +67,11 @@ function App() {
     };
 
 
-    if (!dictionary[lastChar] || dictionary[lastChar].length === 0) {
+    if (!dictionary[userLastChar] || dictionary[userLastChar].length === 0) {
       alert("くっ...単語が思いつかない...君の勝ちだ！！")
       reset();
     }
-    const words = dictionary[lastChar];
+    const words = dictionary[userLastChar];
     const randomIndex = Math.floor(Math.random() * words.length)
     const randomWord = words[randomIndex];
 
@@ -81,7 +81,7 @@ function App() {
 
     setDictionary({
       ...dictionary,
-      [lastChar]: updateWords
+      [userLastChar]: updateWords
     })
 
     setResponseWord(randomWord);
