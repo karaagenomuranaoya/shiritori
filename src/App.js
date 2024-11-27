@@ -51,7 +51,7 @@ function App() {
       alert("3文字以上で頼むぞ。")
       return;
     }
-    const userLastChar = ruleChar(userWord);
+    const lastChar = userWord.slice(-1);
 
     if (lastChar === "ん") {
       alert("「ん」で終わってるじゃん。負けちゃうよ。")
@@ -62,10 +62,21 @@ function App() {
     if (!(responseWord === '')) {
       if (!(firstChar === ruleChar(responseWord))) {
         alert("しりとり知ってる？")
-        return;
       }
     };
 
+    // if (!(responseWord === '')) {
+    //   if ((responseWord.slice(-2) === "ー）")
+    //   ) {
+    //     if (!(responseWord.slice(-3, -2) === firstChar)) {
+    //       alert("僕の単語聞いてた？")
+    //       return;
+    //     }
+    //   } else if (!((firstChar) === (responseWord.slice(-2, -1)))) {
+    //     alert("僕の単語聞いてた？")
+    //     return;
+    //   }
+    // }
 
     if (!dictionary[lastChar] || dictionary[lastChar].length === 0) {
       alert("くっ...単語が思いつかない...君の勝ちだ！！")
