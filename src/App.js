@@ -11,6 +11,31 @@ function App() {
   const [history, setHistory] = useState([]);
   const [dictionary, setDictionary] = useState(initialDictionary)
 
+  //コンピュータ側の単語の最後の文字（＝人間が単語の最初につけなければいけない文字）
+  const ruleChar = (word) => {
+    if (word.endsWith("ー）")) {
+      if (word.endsWith("ゃー）")) { return "や"; }
+      else if (word.endsWith("ゃー）")) { return "や"; }
+      else if (word.endsWith("ゅー）")) { return "ゆ"; }
+      else if (word.endsWith("ょー）")) { return "よ"; }
+      else if (word.endsWith("ぁー）")) { return "あ"; }
+      else if (word.endsWith("ぃー）")) { return "い"; }
+      else if (word.endsWith("ぅー）")) { return "う"; }
+      else if (word.endsWith("ぇー）")) { return "え"; }
+      else if (word.endsWith("ぉー）")) { return "お"; }
+      else { return word.slice(-3, -2) }
+    }
+    else if (word.endsWith("ゃ）")) { return "や"; }
+    else if (word.endsWith("ゅ）")) { return "ゆ"; }
+    else if (word.endsWith("ょ）")) { return "よ"; }
+    else if (word.endsWith("ぁ）")) { return "あ"; }
+    else if (word.endsWith("ぃ）")) { return "い"; }
+    else if (word.endsWith("ぅ）")) { return "う"; }
+    else if (word.endsWith("ぇ）")) { return "え"; }
+    else if (word.endsWith("ぉ）")) { return "お"; }
+    else { return word.slice(-2, -1) }
+  };
+
   const handleSubmit = () => {
     //空じゃない？
     if (!userWord.trim()) {
@@ -34,133 +59,13 @@ function App() {
     }
 
     const firstChar = userWord.slice(0, 1);
-
-
     if (!(responseWord === '')) {
-      if (responseWord.endsWith("ー）")) {
-        if (responseWord.endsWith("ゃー）")) {
-          if (!userWord.startsWith("や")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ゅー）")) {
-          if (!userWord.startsWith("ゆ")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ょー）")) {
-          if (!userWord.startsWith("よ")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ぁー）")) {
-          if (!userWord.startsWith("あ")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ぃー）")) {
-          if (!userWord.startsWith("い")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ぅー）")) {
-          if (!userWord.startsWith("う")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ぇー）")) {
-          if (!userWord.startsWith("え")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else if (responseWord.endsWith("ぉー）")) {
-          if (!userWord.startsWith("お")) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
-        else {
-          if (!(firstChar === responseWord.slice(-3, -2))) {
-            alert("僕の単語聞いてた？")
-            return;
-          }
-        }
+      if (!(firstChar === ruleChar(responseWord))) {
+        alert("しりとり知ってる？")
+        return;
       }
-      else if (responseWord.endsWith("ゃ）")) {
-        if (!userWord.startsWith("や")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ゅ）")) {
-        if (!userWord.startsWith("ゆ")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ょ）")) {
-        if (!userWord.startsWith("よ")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ぁ）")) {
-        if (!userWord.startsWith("あ")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ぃ）")) {
-        if (!userWord.startsWith("い")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ぅ）")) {
-        if (!userWord.startsWith("う")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ぇ）")) {
-        if (!userWord.startsWith("え")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else if (responseWord.endsWith("ぉ）")) {
-        if (!userWord.startsWith("お")) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-      else {
-        if (!(firstChar === responseWord.slice(-2, -1))) {
-          alert("僕の単語聞いてた？")
-          return;
-        }
-      }
-    }
+    };
 
-    // if (!(responseWord === '')) {
-    //   if ((responseWord.slice(-2) === "ー）")
-    //   ) {
-    //     if (!(responseWord.slice(-3, -2) === firstChar)) {
-    //       alert("僕の単語聞いてた？")
-    //       return;
-    //     }
-    //   } else if (!((firstChar) === (responseWord.slice(-2, -1)))) {
-    //     alert("僕の単語聞いてた？")
-    //     return;
-    //   }
-    // }
 
     if (!dictionary[lastChar] || dictionary[lastChar].length === 0) {
       alert("くっ...単語が思いつかない...君の勝ちだ！！")
@@ -187,12 +92,14 @@ function App() {
     }
     setHistory(history10);
     setUserWord('');
-    if (randomWord.endsWith("ん") || randomWord.endsWith("ン") || randomWord.endsWith("ん）") || randomWord.endsWith("ン）")) {
-      alert(`${randomWord}！...あっ！油断した...君の勝ちだ！！`)
-      reset();
+    if (randomWord.endsWith("ん）")) {
+      alert(`${randomWord}！...あっ！油断した...おまけして，「${randomWord.slice(-3, -2)}」から頼むよぉ`)
+      setResponseWord(randomWord.slice(0, -2) + "）");
     }
 
   }
+
+  console.log(ruleChar("（ふぅーちゃー）"))
 
   const reset = () => {
     window.location.reload();
@@ -219,9 +126,9 @@ function App() {
                 <button className="button is-primary is-large is-responsive is-fullwidth" onClick={handleSubmit}>回答</button>
                 <h1>　　　</h1>
                 <div className="content">
-                  <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、` : "好きな言葉で始めたまえ"}！</h2>
-                  <h2>{responseWord}！</h2>
-                  <h3>【ちょこっと解説】<br></br>{meaning}</h3>
+                  <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、` : "好きな言葉（ひらがな）で始めたまえ"}</h2>
+                  <h2>{history.length > 0 ? responseWord + "！" : ''}</h2>
+                  <h4>{history.length > 0 ? "【ちょこっと解説】" : ''}<br></br>{meaning}</h4>
                 </div>
                 <ul>
                   {history.map((item, index) => (
@@ -238,8 +145,8 @@ function App() {
         </div>
       </div>
 
-      <button className="button is-danger is-fixed-top" onClick={reset}>リセット</button><h1>小さい文字で終わる言葉には、その言葉で返してね。例：歯医者（はいしゃ）→やりいか</h1>
-    </div>
+      <button className="button is-danger is-fixed-top" onClick={reset}>リセット</button><p>小さい文字で終わる言葉には、その言葉で返してね。例：歯医者（はいしゃ）→やりいか<br></br>しりとり師範は忘れっぽいです。君と同じ言葉を言っても許してね。</p>
+    </div >
   );
 }
 
