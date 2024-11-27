@@ -11,29 +11,29 @@ function App() {
   const [history, setHistory] = useState([]);
   const [dictionary, setDictionary] = useState(initialDictionary)
 
-  //コンピュータ側の単語の最後の文字（＝人間が単語の最初につけなければいけない文字）
+  //コンピュータ側の単語の最後の文字：＝人間が単語の最初につけなければいけない文字
   const ruleChar = (word) => {
-    if (word.endsWith("ー）")) {
-      if (word.endsWith("ゃー）")) { return "や"; }
-      else if (word.endsWith("ゃー）")) { return "や"; }
-      else if (word.endsWith("ゅー）")) { return "ゆ"; }
-      else if (word.endsWith("ょー）")) { return "よ"; }
-      else if (word.endsWith("ぁー）")) { return "あ"; }
-      else if (word.endsWith("ぃー）")) { return "い"; }
-      else if (word.endsWith("ぅー）")) { return "う"; }
-      else if (word.endsWith("ぇー）")) { return "え"; }
-      else if (word.endsWith("ぉー）")) { return "お"; }
-      else { return word.slice(-3, -2) }
+    if (word.endsWith("ー")) {
+      if (word.endsWith("ゃー")) { return "や"; }
+      else if (word.endsWith("ゃー")) { return "や"; }
+      else if (word.endsWith("ゅー")) { return "ゆ"; }
+      else if (word.endsWith("ょー")) { return "よ"; }
+      else if (word.endsWith("ぁー")) { return "あ"; }
+      else if (word.endsWith("ぃー")) { return "い"; }
+      else if (word.endsWith("ぅー")) { return "う"; }
+      else if (word.endsWith("ぇー")) { return "え"; }
+      else if (word.endsWith("ぉー")) { return "お"; }
+      else { return word.slice(-2, -1) }
     }
-    else if (word.endsWith("ゃ）")) { return "や"; }
-    else if (word.endsWith("ゅ）")) { return "ゆ"; }
-    else if (word.endsWith("ょ）")) { return "よ"; }
-    else if (word.endsWith("ぁ）")) { return "あ"; }
-    else if (word.endsWith("ぃ）")) { return "い"; }
-    else if (word.endsWith("ぅ）")) { return "う"; }
-    else if (word.endsWith("ぇ）")) { return "え"; }
-    else if (word.endsWith("ぉ）")) { return "お"; }
-    else { return word.slice(-2, -1) }
+    else if (word.endsWith("ゃ")) { return "や"; }
+    else if (word.endsWith("ゅ")) { return "ゆ"; }
+    else if (word.endsWith("ょ")) { return "よ"; }
+    else if (word.endsWith("ぁ")) { return "あ"; }
+    else if (word.endsWith("ぃ")) { return "い"; }
+    else if (word.endsWith("ぅ")) { return "う"; }
+    else if (word.endsWith("ぇ")) { return "え"; }
+    else if (word.endsWith("ぉ")) { return "お"; }
+    else { return word.slice(-1) }
   };
 
   const handleSubmit = () => {
@@ -51,9 +51,9 @@ function App() {
       alert("3文字以上で頼むぞ。")
       return;
     }
-    const lastChar = userWord.slice(-1);
+    const userLastChar = ruleChar(userWord);
 
-    if (lastChar === "ん") {
+    if (userLastChar === "ん") {
       alert("「ん」で終わってるじゃん。負けちゃうよ。")
       return;
     }
@@ -62,11 +62,12 @@ function App() {
     if (!(responseWord === '')) {
       if (!(firstChar === ruleChar(responseWord))) {
         alert("しりとり知ってる？")
+        return;
       }
     };
 
     // if (!(responseWord === '')) {
-    //   if ((responseWord.slice(-2) === "ー）")
+    //   if ((responseWord.slice(-2) === "ー")
     //   ) {
     //     if (!(responseWord.slice(-3, -2) === firstChar)) {
     //       alert("僕の単語聞いてた？")
@@ -78,11 +79,11 @@ function App() {
     //   }
     // }
 
-    if (!dictionary[lastChar] || dictionary[lastChar].length === 0) {
+    if (!dictionary[userLastChar] || dictionary[userLastChar].length === 0) {
       alert("くっ...単語が思いつかない...君の勝ちだ！！")
       reset();
     }
-    const words = dictionary[lastChar];
+    const words = dictionary[userLastChar];
     const randomIndex = Math.floor(Math.random() * words.length)
     const randomWord = words[randomIndex];
 
@@ -92,7 +93,7 @@ function App() {
 
     setDictionary({
       ...dictionary,
-      [lastChar]: updateWords
+      [userLastChar]: updateWords
     })
 
     setResponseWord(randomWord);
@@ -103,14 +104,12 @@ function App() {
     }
     setHistory(history10);
     setUserWord('');
-    if (randomWord.endsWith("ん）")) {
-      alert(`${randomWord}！...あっ！油断した...おまけして，「${randomWord.slice(-3, -2)}」から頼むよぉ`)
-      setResponseWord(randomWord.slice(0, -2) + "）");
+    if (randomWord.endsWith("ん")) {
+      alert(`${randomWord}！...あっ！油断した...おまけして，「${randomWord.slice(-2, -1)}」から頼むよぉ`)
+      setResponseWord(randomWord.slice(0, -1) + "");
     }
 
   }
-
-  console.log(ruleChar("（ふぅーちゃー）"))
 
   const reset = () => {
     window.location.reload();
@@ -137,8 +136,8 @@ function App() {
                 <button className="button is-primary is-large is-responsive is-fullwidth" onClick={handleSubmit}>回答</button>
                 <h1>　　　</h1>
                 <div className="content">
-                  <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、` : "好きな言葉（ひらがな）で始めたまえ"}</h2>
-                  <h2>{history.length > 0 ? responseWord + "！" : ''}</h2>
+                  <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、` : "好きな言葉：ひらがなで始めたまえ"}</h2>
+                  <h2>{history.length > 0 ? responseWord : ''}</h2>
                   <h4>{history.length > 0 ? "【ちょこっと解説】" : ''}<br></br>{meaning}</h4>
                 </div>
                 <ul>
@@ -156,7 +155,7 @@ function App() {
         </div>
       </div>
 
-      <button className="button is-danger is-fixed-top" onClick={reset}>リセット</button><p>小さい文字で終わる言葉には、その言葉で返してね。例：歯医者（はいしゃ）→やりいか<br></br>しりとり師範は忘れっぽいです。君と同じ言葉を言っても許してね。</p>
+      <button className="button is-danger is-fixed-top" onClick={reset}>リセット</button><p>小さい文字で終わる言葉には、その言葉で返してね。例：歯医者：はいしゃ→やりいか<br></br>しりとり師範は忘れっぽいです。君と同じ言葉を言っても許してね。</p>
     </div >
   );
 }
