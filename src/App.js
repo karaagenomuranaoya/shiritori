@@ -81,7 +81,7 @@ function App() {
 
     if (!dictionary[userLastChar] || dictionary[userLastChar].length === 0) {
       alert("くっ...単語が思いつかない...君の勝ちだ！！")
-      reset();
+      return;
     }
     const words = dictionary[userLastChar];
     const randomIndex = Math.floor(Math.random() * words.length)
@@ -105,8 +105,8 @@ function App() {
     setHistory(history10);
     setUserWord('');
     if (randomWord.endsWith("ん")) {
-      alert(`${randomWord}！...あっ！油断した...おまけして，「${randomWord.slice(-2, -1)}」から頼むよぉ`)
-      setResponseWord(randomWord.slice(0, -1) + "");
+      alert(`${randomWord}！...あっ！油断した...おまけして，「${ruleChar(randomWord.slice(0, -1))}」から頼むよぉ`)
+      setResponseWord(randomWord.slice(0, -1));
     }
 
   }
@@ -133,7 +133,7 @@ function App() {
                   placeholder='単語を入力してください'//
                 />
                 <h1>　　　</h1>
-                <button className="button is-primary is-large is-responsive is-fullwidth" onClick={handleSubmit}>回答</button>
+                <button className="button is-primary is-large is-responsive is-fullwidth" id="answer" onClick={handleSubmit}>回答</button>
                 <h1>　　　</h1>
                 <div className="content">
                   <h2>{history.length > 0 ? `${history[history.length - 1].user}、${history[history.length - 1].user.slice(-1)}、${history[history.length - 1].user.slice(-1)}、、、` : "好きな言葉：ひらがなで始めたまえ"}</h2>
